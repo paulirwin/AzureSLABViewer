@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Help";
+}
+
+<h2>Help</h2>
+
+<p class="lead">Semantic Logging Application Block viewer for Azure Table Storage</p>
+
+@if (Request.IsAuthenticated)
+{
+    <p>Version: @typeof(MvcApplication).Assembly.GetName().Version</p>
+}

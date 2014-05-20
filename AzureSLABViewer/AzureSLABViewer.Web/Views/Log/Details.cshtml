@@ -1,0 +1,71 @@
+﻿@model AzureSLABViewer.Web.Models.SLABLogsTable
+@{
+    ViewBag.Title = "Log Entry Details";
+}
+
+<h2>
+    @ViewBag.Title
+    @switch (Model.Level)
+    {
+        case 0:
+            <span class="label label-default">Log Always</span>
+            break;
+        case 1:
+        <span class="label label-danger">Critical</span>
+            break;
+        case 2:
+        <span class="label label-danger">Error</span>
+            break;
+        case 3:
+        <span class="label label-warning">Warning</span>
+            break;
+        case 4:
+        <span class="label label-info">Info</span>
+            break;
+        case 5:
+        <span class="label label-default">Verbose</span>
+            break;
+        default:
+        <span class="label label-default">@Model.Level</span>
+            break;
+    }
+</h2>
+
+<dl class="dl-horizontal">
+    <dt>Partition Key</dt>
+    <dd>@Model.PartitionKey</dd>
+    <dt>Row Key</dt>
+    <dd>@Model.RowKey</dd>
+    <dt>Timestamp</dt>
+    <dd>@Model.Timestamp</dd>
+    <dt>Provider ID</dt>
+    <dd>@Model.ProviderId</dd>
+    <dt>Provider Name</dt>
+    <dd>@Model.ProviderName</dd>
+    <dt>Event Date/Time UTC</dt>
+    <dd>@Model.EventDate</dd>
+    <dt>Event ID</dt>
+    <dd>@Model.EventId</dd>
+    <dt>Instance Name</dt>
+    <dd>@Model.InstanceName</dd>
+    <dt>Keywords</dt>
+    <dd>@Model.Keywords</dd>
+    <dt>Task</dt>
+    <dd>@Model.Task</dd>
+    <dt>Opcode</dt>
+    <dd>@Model.Opcode</dd>
+    <dt>Version</dt>
+    <dd>@Model.Version</dd>
+</dl>
+
+<h3>Message</h3>
+
+<div class="well">
+    @Html.Raw(Server.HtmlEncode(Model.Message ?? string.Empty).Replace("\n", "<br />").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;"))
+</div>
+
+<h3>Payload</h3>
+
+<div class="well">
+    @Html.Raw(Server.HtmlEncode(Model.Payload ?? string.Empty).Replace("\n", "<br />"))
+</div>
