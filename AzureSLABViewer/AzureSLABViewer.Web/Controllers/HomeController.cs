@@ -13,21 +13,12 @@ namespace AzureSLABViewer.Web.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            var storageAccount = CloudStorageAccount.Parse(ConfigSettings.StorageConnectionString);
+            using (var context = new ApplicationDbContext())
+            {
+                var connections = context.StorageConnections.OrderBy(i => i.DisplayName).ToList();
 
-            var tableClient = storageAccount.CreateCloudTableClient();
-
-            var table = tableClient.GetTableReference("SLABLogsTable");
-
-            if (!table.Exists())
-                return View("TableDoesntExist");
-
-            var query = (from ent in table.CreateQuery<SLABLogsTable>()
-                         select ent)
-                        .Take(100)
-                        .ToList();
-
-            return View(query);
+                return View(connections);
+            }
         }
     }
 }

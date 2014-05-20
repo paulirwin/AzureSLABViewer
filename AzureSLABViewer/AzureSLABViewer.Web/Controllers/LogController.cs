@@ -11,31 +11,69 @@ namespace AzureSLABViewer.Web.Controllers
     [Authorize]
     public class LogController : Controller
     {
-        public ActionResult Details(string pk, string rk)
+        public ActionResult Details(int id, string pk, string rk)
         {
             if (string.IsNullOrEmpty(pk)
                 || string.IsNullOrEmpty(rk))
                 return Redirect("/");
 
-            var storageAccount = CloudStorageAccount.Parse(ConfigSettings.StorageConnectionString);
+            using (var context = new ApplicationDbContext())
+            {
+                var connection = context.StorageConnections.Find(id);
 
-            var tableClient = storageAccount.CreateCloudTableClient();
+                if (connection == null)
+                    return HttpNotFound();
 
-            var table = tableClient.GetTableReference("SLABLogsTable");
+                var storageAccount = CloudStorageAccount.Parse(connection.ConnectionString);
 
-            if (!table.Exists())
-                return HttpNotFound();
+                var tableClient = storageAccount.CreateCloudTableClient();
 
-            var entry = (from ent in table.CreateQuery<SLABLogsTable>()
-                         where ent.PartitionKey == pk
-                         && ent.RowKey == rk
-                         select ent)
-                        .FirstOrDefault();
+                var table = tableClient.GetTableReference("SLABLogsTable");
 
-            if (entry == null)
-                return HttpNotFound();
+                if (!table.Exists())
+                    return HttpNotFound();
 
-            return View(entry);
+                var entry = (from ent in table.CreateQuery<SLABLogsTable>()
+                             where ent.PartitionKey == pk
+                             && ent.RowKey == rk
+                             select ent)
+                            .FirstOrDefault();
+
+                if (entry == null)
+                    return HttpNotFound();
+
+                return View(entry);
+            }
+        }
+
+        public ActionResult List(int id)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var connection = context.StorageConnections.Find(id);
+
+                if (connection == null)
+                    return HttpNotFound();
+
+                ViewBag.ConnectionName = connection.DisplayName;
+                ViewBag.ConnectionID = id;
+
+                var storageAccount = CloudStorageAccount.Parse(connection.ConnectionString);
+
+                var tableClient = storageAccount.CreateCloudTableClient();
+
+                var table = tableClient.GetTableReference("SLABLogsTable");
+
+                if (!table.Exists())
+                    return View("TableDoesntExist");
+
+                var query = (from ent in table.CreateQuery<SLABLogsTable>()
+                             select ent)
+                            .Take(100)
+                            .ToList();
+
+                return View(query);
+            }
         }
 	}
 }

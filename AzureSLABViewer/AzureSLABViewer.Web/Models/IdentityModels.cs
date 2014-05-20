@@ -15,6 +15,8 @@ namespace AzureSLABViewer.Web.Models
         {
         }
 
+        public DbSet<StorageConnection> StorageConnections { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -22,7 +24,8 @@ namespace AzureSLABViewer.Web.Models
             modelBuilder.Entity<IdentityRole>().ToTable("SLABViewerRoles");
             modelBuilder.Entity<IdentityUserClaim>().ToTable("SLABViewerUserClaims");
             modelBuilder.Entity<IdentityUserLogin>().ToTable("SLABViewerUserLogins");
-            modelBuilder.Entity<IdentityUserRole>().ToTable("SLABViewerUserRoles");            
+            modelBuilder.Entity<IdentityUserRole>().ToTable("SLABViewerUserRoles");
+            modelBuilder.Entity<StorageConnection>().ToTable("SLABViewerStorageConnections");
         }
     }
 }

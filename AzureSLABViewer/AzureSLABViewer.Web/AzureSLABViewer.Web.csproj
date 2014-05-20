@@ -224,13 +224,24 @@
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
+    <Compile Include="Controllers\StorageConnectionsController.cs" />
     <Compile Include="Filters\CheckIfRegistrationAllowedAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405201748456_InitialCreate.cs" />
+    <Compile Include="Migrations\201405201748456_InitialCreate.Designer.cs">
+      <DependentUpon>201405201748456_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405201844428_InitalMigration.cs" />
+    <Compile Include="Migrations\201405201844428_InitalMigration.Designer.cs">
+      <DependentUpon>201405201844428_InitalMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\SLABLogsTable.cs" />
+    <Compile Include="Models\StorageConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WebRole.cs" />
@@ -249,6 +260,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <None Include="Properties\PublishProfiles\jarvisslab %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\jarvisslab.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -277,7 +290,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Log\List.cshtml" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
@@ -286,6 +299,12 @@
     <Content Include="Views\Help\Index.cshtml" />
     <Content Include="Views\Home\TableDoesntExist.cshtml" />
     <Content Include="Views\Log\Details.cshtml" />
+    <Content Include="Views\StorageConnections\Create.cshtml" />
+    <Content Include="Views\StorageConnections\Delete.cshtml" />
+    <Content Include="Views\StorageConnections\Details.cshtml" />
+    <Content Include="Views\StorageConnections\Edit.cshtml" />
+    <Content Include="Views\StorageConnections\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -293,6 +312,14 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201405201748456_InitialCreate.resx">
+      <DependentUpon>201405201748456_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405201844428_InitalMigration.resx">
+      <DependentUpon>201405201844428_InitalMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

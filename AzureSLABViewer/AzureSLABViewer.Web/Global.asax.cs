@@ -1,5 +1,8 @@
-﻿using System;
+﻿using AzureSLABViewer.Web.Migrations;
+using AzureSLABViewer.Web.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -13,6 +16,8 @@ namespace AzureSLABViewer.Web
     {
         protected void Application_Start()
         {
+            Database.SetInitializer<ApplicationDbContext>(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
