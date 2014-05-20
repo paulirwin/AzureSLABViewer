@@ -11,7 +11,6 @@ namespace AzureSLABViewer.Web
         static ConfigSettings()
         {
             AllowRegistration = GetValueOrDefault("AllowRegistration", true);
-            StorageConnectionString = GetValueOrDefault("StorageConnectionString", "UseDevelopmentStorage=true");
         }
 
         private static bool GetValueOrDefault(string key, bool defaultValue)
@@ -19,7 +18,7 @@ namespace AzureSLABViewer.Web
             string value = CloudConfigurationManager.GetSetting(key);
             bool b;
 
-            if (!bool.TryParse(key, out b))
+            if (!bool.TryParse(value, out b))
                 return defaultValue;
 
             return b;
@@ -36,7 +35,5 @@ namespace AzureSLABViewer.Web
         }
 
         public static bool AllowRegistration { get; private set; }
-
-        public static string StorageConnectionString { get; private set; }
     }
 }
