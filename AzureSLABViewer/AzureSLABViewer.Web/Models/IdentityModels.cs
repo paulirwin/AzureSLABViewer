@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity;
 
 namespace AzureSLABViewer.Web.Models
 {
@@ -12,6 +13,16 @@ namespace AzureSLABViewer.Web.Models
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ApplicationUser>().ToTable("SLABViewerUsers");
+            modelBuilder.Entity<IdentityRole>().ToTable("SLABViewerRoles");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("SLABViewerUserClaims");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("SLABViewerUserLogins");
+            modelBuilder.Entity<IdentityUserRole>().ToTable("SLABViewerUserRoles");            
         }
     }
 }
