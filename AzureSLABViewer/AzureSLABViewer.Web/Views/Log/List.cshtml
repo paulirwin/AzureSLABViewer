@@ -9,13 +9,12 @@
     <thead>
         <tr>
             <th>Level</th>
-            <th>Provider Name</th>
             <th>Event Date/Time UTC</th>
+            <th>Provider / Instance</th>
             <th>Event ID</th>
-            <th>Instance Name</th>
             @*<th>Keywords</th>
-            <th>Task</th>
-            <th>Opcode</th>*@
+                <th>Task</th>
+                <th>Opcode</th>*@
             <th>Message</th>
             <th>Actions</th>
         </tr>
@@ -31,32 +30,34 @@
                             <span class="label label-default">Log Always</span>
                             break;
                         case 1:
-                            <span class="label label-danger">Critical</span>
+                        <span class="label label-danger">Critical</span>
                             break;
                         case 2:
-                            <span class="label label-danger">Error</span>
+                        <span class="label label-danger">Error</span>
                             break;
                         case 3:
-                            <span class="label label-warning">Warning</span>
+                        <span class="label label-warning">Warning</span>
                             break;
                         case 4:
-                            <span class="label label-info">Info</span>
+                        <span class="label label-info">Info</span>
                             break;
                         case 5:
-                            <span class="label label-default">Verbose</span>
+                        <span class="label label-default">Verbose</span>
                             break;
                         default:
-                            <span class="label label-default">@log.Level</span>
+                        <span class="label label-default">@log.Level</span>
                             break;
                     }
                 </td>
-                <td>@log.ProviderName</td>
                 <td>@log.EventDate</td>
+                <td class="instance-name">
+                    <span title="@log.ProviderName">@log.ProviderName</span><br />
+                    <span title="@log.InstanceName">@log.InstanceName</span>
+                </td>
                 <td>@log.EventId</td>
-                <td class="instance-name">@log.InstanceName</td>
                 @*<td>@log.Keywords</td>
-                <td>@log.Task</td>
-                <td>@log.Opcode</td>*@
+                    <td>@log.Task</td>
+                    <td>@log.Opcode</td>*@
                 <td>
                     @if (log.Message.Length > 250)
                     {

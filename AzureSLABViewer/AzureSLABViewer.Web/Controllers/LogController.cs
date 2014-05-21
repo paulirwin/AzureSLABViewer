@@ -24,6 +24,8 @@ namespace AzureSLABViewer.Web.Controllers
                 if (connection == null)
                     return HttpNotFound();
 
+                ViewBag.ConnectionID = id;
+
                 var storageAccount = CloudStorageAccount.Parse(connection.ConnectionString);
 
                 var tableClient = storageAccount.CreateCloudTableClient();
@@ -70,7 +72,8 @@ namespace AzureSLABViewer.Web.Controllers
                 var query = (from ent in table.CreateQuery<SLABLogsTable>()
                              select ent)
                             .Take(100)
-                            .ToList();
+                            .ToList()
+                            .OrderByDescending(i => i.EventDate); // added to handle issue when rowkey not deterministic across apps
 
                 return View(query);
             }
