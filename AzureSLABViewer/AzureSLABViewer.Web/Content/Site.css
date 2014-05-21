@@ -41,7 +41,8 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
-td.instance-name {
+td.instance-name,
+td.connection-string {
     max-width: 200px;
     overflow: hidden;
     -ms-text-overflow: ellipsis;

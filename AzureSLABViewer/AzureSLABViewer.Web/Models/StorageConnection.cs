@@ -13,10 +13,12 @@ namespace AzureSLABViewer.Web.Models
 
         [Required]
         [StringLength(100)]
+        [Display(Name = "Display Name")]
         public string DisplayName { get; set; }
 
         [Required]
         [StringLength(500)]
+        [Display(Name = "Connection String")]
         public string ConnectionString { get; set; }
     }
 }
