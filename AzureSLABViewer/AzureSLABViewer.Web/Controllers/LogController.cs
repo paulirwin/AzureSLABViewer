@@ -1,5 +1,7 @@
 ﻿using AzureSLABViewer.Web.Models;
 using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Table;
+using Microsoft.WindowsAzure.Storage.Table.Queryable;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,7 +50,7 @@ namespace AzureSLABViewer.Web.Controllers
             }
         }
 
-        public ActionResult List(int id)
+        public ActionResult List(int id, string pk, string rk)
         {
             using (var context = new ApplicationDbContext())
             {
@@ -71,12 +73,31 @@ namespace AzureSLABViewer.Web.Controllers
 
                 var query = (from ent in table.CreateQuery<SLABLogsTable>()
                              select ent)
-                            .Take(100)
-                            .ToList()
-                            .OrderByDescending(i => i.EventDate); // added to handle issue when rowkey not deterministic across apps
+                             .Take(100)
+                             .AsTableQuery();
 
-                return View(query);
+                TableContinuationToken token = null;
+
+                if (!string.IsNullOrEmpty(pk) && !string.IsNullOrEmpty(rk))
+                    token = new TableContinuationToken() { NextPartitionKey = pk, NextRowKey = rk };
+
+                var queryResult = query.ExecuteSegmented(token);
+
+                var results = queryResult
+                                .ToList()
+                                .OrderByDescending(i => i.EventDate); // added to handle issue when rowkey not deterministic across apps
+
+                if (queryResult.ContinuationToken != null)
+                {
+                    ViewBag.HasNextPage = true;
+                    ViewBag.NextPartitionKey = queryResult.ContinuationToken.NextPartitionKey;
+                    ViewBag.NextRowKey = queryResult.ContinuationToken.NextRowKey;
+                }
+                else
+                    ViewBag.HasNextPage = false;
+
+                return View(results);
             }
         }
-	}
+    }
 }

@@ -75,3 +75,8 @@
         }
     </tbody>
 </table>
+
+@if (ViewBag.HasNextPage)
+{
+    <a href="/Log/List/@ViewBag.ConnectionID?pk=@ViewBag.NextPartitionKey&rk=@ViewBag.NextRowKey">Next Page</a>
+}
