@@ -10,7 +10,8 @@ namespace AzureSLABViewer.Web.Controllers
 {
     public class LogController : Controller
     {
-        private static readonly string _storageConnection = ConfigurationManager.AppSettings["_storageConnection"] ?? "UseDevelopmentStorage=true";
+        private static readonly string _storageConnection = ConfigurationManager.AppSettings["StorageConnection"] ?? "UseDevelopmentStorage=true";
+        private static readonly string _siteTitle = ConfigurationManager.AppSettings["SiteTitle"] ?? "Azure SLAB Logs";
 
         public ActionResult Details(string pk, string rk)
         {
@@ -76,6 +77,18 @@ namespace AzureSLABViewer.Web.Controllers
                 ViewBag.HasNextPage = false;
 
             return View(results);
+        }
+
+        protected override ViewResult View(string viewName, string masterName, object model)
+        {
+            ViewBag.SiteTitle = _siteTitle;
+            return base.View(viewName, masterName, model);
+        }
+
+        protected override ViewResult View(IView view, object model)
+        {
+            ViewBag.SiteTitle = _siteTitle;
+            return base.View(view, model);
         }
     }
 }
