@@ -1,19 +1,16 @@
 ﻿using Microsoft.WindowsAzure.Storage.Table;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace AzureSLABViewer.Web.Models
 {
-    public class SLABLogsTable : TableEntity
+    public class SlabLogsTable : TableEntity
     {
-        public SLABLogsTable()
+        public SlabLogsTable()
             : base()
         {
         }
 
-        public SLABLogsTable(string partitionKey, string rowKey)
+        public SlabLogsTable(string partitionKey, string rowKey)
             : base(partitionKey, rowKey)
         {
         }

@@ -1,6 +1,6 @@
-﻿@model IEnumerable<AzureSLABViewer.Web.Models.SLABLogsTable>
+﻿@model IEnumerable<AzureSLABViewer.Web.Models.SlabLogsTable>
 @{
-    ViewBag.Title = ViewBag.ConnectionName + " Logs";
+    ViewBag.Title = "SLAB Logs";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -69,7 +69,7 @@
                     }
                 </td>
                 <td>
-                    <a href="/Log/Details/@ViewBag.ConnectionID?pk=@log.PartitionKey&rk=@log.RowKey">Details</a>
+                    <a href="/Log/Details?pk=@log.PartitionKey&rk=@log.RowKey">Details</a>
                 </td>
             </tr>
         }
@@ -78,5 +78,5 @@
 
 @if (ViewBag.HasNextPage)
 {
-    <a href="/Log/List/@ViewBag.ConnectionID?pk=@ViewBag.NextPartitionKey&rk=@ViewBag.NextRowKey">Next Page</a>
+    <a href="/Log/List?pk=@ViewBag.NextPartitionKey&rk=@ViewBag.NextRowKey">Next Page</a>
 }
